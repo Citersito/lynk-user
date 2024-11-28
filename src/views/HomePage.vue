@@ -1,29 +1,15 @@
 <template>
-  <Banner />
   <div id="homepage">
-    <div v-if="productosConCategorias.length > 0">
-      <div
-        v-for="producto in productosConCategorias"
+    <div
+      v-if="productos.length > 0"
+      class="grid grid-cols-1 md:grid-cols-3 gap-4"
+    >
+      <ProductCard
+        v-for="producto in productos"
         :key="producto.ProductoID"
-        class="producto"
-      >
-        <div class="producto__img">
-          <img
-            :src="producto.imagen || 'https://via.placeholder.com/50'"
-            alt="Producto"
-          />
-        </div>
-        <div class="producto__info">
-          <h3 class="producto__nombre">{{ producto.Nombre }}</h3>
-          <p class="producto__precio">Precio: ${{ producto.Precio }}</p>
-          <p class="producto__categoria">
-            Categoria: {{ producto.nombreCategoria || "Cargando..." }}
-          </p>
-          <p class="producto__descripcion">
-            Descripcion: {{ producto.Descripcion }}
-          </p>
-        </div>
-      </div>
+        :producto="producto"
+        :imagenPrincipal="imagenesProductos[producto.ProductoID]"
+      />
     </div>
     <div v-else>
       <p>
@@ -35,57 +21,52 @@
 
 <script>
 import apiClient from "@/services/api.js";
+import ProductCard from "@/components/Home/Products.vue";
 
 export default {
-  components: {},
+  components: {
+    ProductCard,
+  },
   data() {
     return {
       productos: [],
-      productosConCategorias: [],
+      imagenesProductos: {},
     };
   },
   methods: {
-    // Método para obtener los productos desde el backend
     async obtenerProductos() {
       try {
         const response = await apiClient.get("/api/productos");
         this.productos = response.data;
 
-        // Fetch category names for each product
-        await this.fetchCategoryNames();
+        // Obtener imágenes para cada producto
+        await Promise.all(
+          this.productos.map(async (producto) => {
+            try {
+              const imagenResponse = await apiClient.get(
+                `/api/productos/imagenes/principal/${producto.ProductoID}`
+              );
+              if (imagenResponse.data && imagenResponse.data.length > 0) {
+                this.imagenesProductos[producto.ProductoID] =
+                  imagenResponse.data[0].ImagenURL;
+              } else {
+                this.imagenesProductos[producto.ProductoID] = null;
+              }
+            } catch (error) {
+              console.error(
+                `Error al obtener imagen para producto ${producto.ProductoID}:`,
+                error
+              );
+              this.imagenesProductos[producto.ProductoID] = null;
+            }
+          })
+        );
       } catch (error) {
         console.error(
           "Error al obtener los productos:",
           error instanceof Error ? error.message : error
         );
       }
-    },
-
-    // Método para obtener el nombre de categoría para cada producto
-    async fetchCategoryNames() {
-      // Create a copy of productos with category names
-      this.productosConCategorias = await Promise.all(
-        this.productos.map(async (producto) => {
-          try {
-            const categoriaResponse = await apiClient.get(
-              `/api/categorias/${producto.CategoriaID}`
-            );
-            return {
-              ...producto,
-              nombreCategoria: categoriaResponse.data[0].Nombre,
-            };
-          } catch (error) {
-            console.error(
-              `Error al obtener nombre de categoría para ID ${producto.CategoriaID}:`,
-              error instanceof Error ? error.message : error
-            );
-            return {
-              ...producto,
-              nombreCategoria: "Error al cargar",
-            };
-          }
-        })
-      );
     },
   },
   async mounted() {
