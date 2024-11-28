@@ -20,8 +20,6 @@
 </template>
 
 <script>
-import apiClient from "@/services/api.js"; // Asegúrate de que tienes configurado tu apiClient
-
 export default {
 	data() {
 		return {
@@ -30,23 +28,19 @@ export default {
 		};
 	},
 	methods: {
-		async login() {
-			try {
-				const payload = {
-					email: this.email,
-					password: this.password,
-				};
+		login() {
+			// Verificar si el usuario existe en localStorage
+			const users = JSON.parse(localStorage.getItem("users")) || [];
+			const user = users.find(
+				(user) => user.email === this.email && user.password === this.password
+			);
 
-				// Realizar la solicitud POST al endpoint de login
-				const response = await apiClient.post("/auth/login/", payload);
-
-				// Si el login es exitoso, puedes manejar la respuesta
+			if (user) {
 				alert("Inicio de sesión exitoso");
-				// Aquí podrías redirigir al usuario a otra ruta, por ejemplo:
-				this.$router.push("/home");
-			} catch (error) {
-				console.error("Error en el login:", error);
-				alert("Error al iniciar sesión. Por favor, verifica tus credenciales.");
+				// Redirigir al panel principal o a la página deseada
+				this.$router.push("/"); // O la ruta que desees
+			} else {
+				alert("Credenciales incorrectas.");
 			}
 		},
 	},
