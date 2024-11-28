@@ -1,0 +1,287 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+header {
+  margin-bottom: 20px;
+
+  .pagar {
+    font-size: 40px; /* Tamaño moderado */
+    font-weight: 400;
+    margin: 8px 0 40px;
+  }
+
+  .alerta {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 5px;
+    padding: 20px;
+
+    .apartado {
+      font-size: 24px; /* Ajustado a proporción */
+      font-weight: 700;
+    }
+
+    .tienes {
+      font-size: 20px;
+      font-weight: 300;
+      margin-top: 10px;
+    }
+  }
+}
+
+.informacion-personal {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #fff;
+  position: relative;
+
+  h2 {
+    font-size: 28px; /* Tamaño consistente */
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+  }
+
+  .info-contenedor {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+  }
+
+  .info-item {
+    flex: 1;
+
+    .label {
+      font-size: 16px;
+      font-weight: 300;
+    }
+
+    .valor {
+      font-size: 22px;
+      font-weight: 600;
+    }
+  }
+
+  .icono-editar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    img {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+  }
+}
+
+.envio {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #fff;
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .form-envio {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+
+    input,
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px; /* Consistencia en inputs */
+    }
+
+    label {
+      grid-column: span 4;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  }
+}
+
+.pago {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #fff;
+
+  h2 {
+    font-size: 28px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+  }
+
+  .opciones-pago {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .opcion {
+      flex: 1;
+      text-align: center;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 18px; /* Tamaño moderado */
+
+      &.paypal {
+        background-color: #ffc439;
+        color: #000;
+      }
+
+      &.stripe {
+        background-color: #6772e5;
+        color: #fff;
+      }
+    }
+
+    .separador {
+      align-self: center;
+      font-size: 18px; /* Tamaño coherente */
+      color: #666;
+
+      &::before,
+      &::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #ddd;
+        margin: 0 10px;
+      }
+    }
+  }
+
+  form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+
+    input {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px; /* Coherencia en inputs */
+    }
+  }
+}
+
+.orden {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #fff;
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .producto {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 5px;
+      border: 2px solid #004225;
+      background: #fff1e1;
+    }
+
+    .producto-info {
+      display: flex;
+      flex-grow: 1;
+      padding-left: 20px;
+
+      .producto-detalles {
+        font-size: 22px; /* Ajuste proporcional */
+        font-weight: 600;
+
+        span {
+          font-size: 18px;
+          color: #565656;
+        }
+      }
+    }
+
+    .producto-precio {
+      font-size: 22px;
+      font-weight: 600;
+    }
+  }
+
+  .resumen {
+    margin-top: 15px;
+    font-size: 16px;
+
+    div {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+
+    .total {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .btn_pagar {
+      button {
+        width: 100%;
+        padding: 15px;
+        background-color: #004225;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 20px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #003300;
+        }
+      }
+
+      p {
+        font-size: 28px;
+        font-weight: 600;
+        color: #fff;
+      }
+    }
+  }
+}
+
+// Responsivo
+@media (max-width: 768px) {
+  .form-envio {
+    grid-template-columns: 1fr;
+  }
+
+  .opciones-pago {
+    flex-direction: column;
+  }
+}

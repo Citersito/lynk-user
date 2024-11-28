@@ -1,0 +1,12 @@
+// Variables y Configuración Global
+@import "variables";
+@import "mixins";
+@import "base";
+
+// Componentes
+@import "./components/navbar";
+@import "./components/auth";
+@import "./components/cart";
+@import "./components/pay";
+
+@import "./components/home/banner";
